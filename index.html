@@ -4,29 +4,35 @@
   <title>Click-n-kittens</title>
   <script>
   window.onload = function() {
-    var button = document.getElementById('click-action');
-    var image = document.getElementById('cat');
-    var clicksNum = document.getElementById('clicks');
+    var image1 = document.getElementById('image-1');
+    var image2 = document.getElementById('image-2');
+    var clicksNum1 = document.getElementById('counter-1');
+    var clicksNum2 = document.getElementById('counter-2');
     var counter;
 
-    var handler = function() {
-      counter = clicksNum.innerHTML;
-      counter++;
-      clicksNum.innerHTML = counter;
-    };
+    var handler1 = function() {clicksNum1.innerHTML++ ;};
+    var handler2 = function() {clicksNum2.innerHTML++ ;};
 
-    button.addEventListener('click', handler, false);
-    image.addEventListener('click', handler, false);
+    image1.addEventListener('click', handler1, false);
+    image2.addEventListener('click', handler2, false);
   };
   </script>
   <style>
   .container {
     text-align: center;
-    width: 600px;
+    width: 800px;
     margin: 0 auto;
   }
   img {
-    max-width: 100%
+    max-width: 100%;
+  }
+  .cats {
+    display: flex;
+  }
+  .cat {
+    border: 3px;
+    border-style: outset;
+    margin: 5px;
   }
   </style>
 </head>
@@ -35,9 +41,19 @@
     <h1>Cat Clicker</h1>
     <p>Please like my cat! Try clicking on this bud</p>
 
-    <h2>Times clicked: <span id="clicks">0</span></h2>
-    <img id="cat" src="cat.jpg" alt="Cat picture">
-    <div><button id="click-action">Click Me!</button></div>
+    <div class="cats">
+      <div class="cat">
+        <h2>Catty</h2>
+        <h3>Times clicked: <span id="counter-1">0</span></h3>
+        <img id="image-1"src="cat.jpg" alt="Cat 1 picture">
+      </div>
+      <div class="cat">
+        <h2>Pitty</h2>
+        <h3>Times clicked: <span id="counter-2">0</span></h3>
+        <img id="image-2" src="cat2.jpg" alt="Cat 2 picture">
+      </div>
+    </div>
+
   </div>
 
 </body>
