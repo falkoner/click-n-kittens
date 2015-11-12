@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Click-n-kittens</title>
+  <script>
+  window.onload = function() {
+    var button = document.getElementById('click-action');
+    var image = document.getElementById('cat');
+    var clicksNum = document.getElementById('clicks');
+    var counter;
+
+    var handler = function() {
+      counter = clicksNum.innerHTML;
+      counter++;
+      clicksNum.innerHTML = counter;
+    };
+
+    button.addEventListener('click', handler, false);
+    image.addEventListener('click', handler, false);
+  };
+  </script>
+  <style>
+  .container {
+    text-align: center;
+    width: 600px;
+    margin: 0 auto;
+  }
+  img {
+    max-width: 100%
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Cat Clicker</h1>
+    <p>Please like my cat! Try clicking on this bud</p>
+
+    <h2>Times clicked: <span id="clicks">0</span></h2>
+    <img id="cat" src="cat.jpg" alt="Cat picture">
+    <div><button id="click-action">Click Me!</button></div>
+  </div>
+
+</body>
+</html>
