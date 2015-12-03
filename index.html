@@ -4,17 +4,45 @@
   <title>Click-n-kittens</title>
   <script>
   window.onload = function() {
-    var image1 = document.getElementById('image-1');
-    var image2 = document.getElementById('image-2');
-    var clicksNum1 = document.getElementById('counter-1');
-    var clicksNum2 = document.getElementById('counter-2');
-    var counter;
 
-    var handler1 = function() {clicksNum1.innerHTML++ ;};
-    var handler2 = function() {clicksNum2.innerHTML++ ;};
+    // cats data structure
+    var cats = [
+      {"name": "Catty", "image": "cat1.jpg", "counter": 0},
+      {"name": "Pitty", "image": "cat2.jpg", "counter": 0},
+      {"name": "Gritty", "image": "cat3.jpg", "counter": 0},
+      {"name": "Shmitty", "image": "cat4.jpg", "counter": 0},
+      {"name": "Brunty", "image": "cat5.jpg", "counter": 0}
+    ];
 
-    image1.addEventListener('click', handler1, false);
-    image2.addEventListener('click', handler2, false);
+    // generate list of cats
+    var catListPointer = document.getElementById('catlist');
+
+    for (var i = cats.length - 1; i >= 0; i--) {
+      var catListElement = document.createElement('li');
+      catListElement.innerHTML = '<h3>' + cats[i].name + '</h3>';
+
+      catListElement.addEventListener('click', (function(catCopy) {
+          return function() {
+            var nameHtml = '<h2>' + catCopy.name +'</h2>';
+            var clicksHtml = '<h3> Times clicked: <span id="counter">' + catCopy.counter + '</span></h3>';
+            var imageHtml = '<img id="image" src="' + catCopy.image + '" alt="Cat picture">';
+
+            document.getElementById('cat').innerHTML = nameHtml + clicksHtml + imageHtml;
+
+            var imageLocator = document.getElementById('image');
+            var clicksValue = document.getElementById('counter');
+            var handler = function() {
+              clicksValue.innerHTML++ ;
+              catCopy.counter++;
+            };
+
+            imageLocator.addEventListener('click', handler, false);
+          };
+      })(cats[i]));
+
+      catListPointer.appendChild(catListElement);
+    }
+
   };
   </script>
   <style>
@@ -34,23 +62,31 @@
     border-style: outset;
     margin: 5px;
   }
+  #catlist {
+    list-style: none;
+    text-align: center;
+    padding: 10px;
+  }
+
+  #catlist li {
+    border: gray;
+    border-style: solid;
+    margin: 2px;
+  }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Cat Clicker</h1>
+    <h1>Amazing Cat Clicker</h1>
     <p>Please like my cat! Try clicking on this bud</p>
 
     <div class="cats">
       <div class="cat">
-        <h2>Catty</h2>
-        <h3>Times clicked: <span id="counter-1">0</span></h3>
-        <img id="image-1"src="cat.jpg" alt="Cat 1 picture">
+      <ul id="catlist">
+      </ul>
       </div>
-      <div class="cat">
-        <h2>Pitty</h2>
-        <h3>Times clicked: <span id="counter-2">0</span></h3>
-        <img id="image-2" src="cat2.jpg" alt="Cat 2 picture">
+      <div id="cat" class="cat">
+        <h3>Please select a cat</h2>
       </div>
     </div>
 
