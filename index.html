@@ -17,17 +17,24 @@
 
     var view = {
       init: function() {
-        var catListPointer = document.getElementById('catlist');
 
-        for (var i = data.length - 1; i >= 0; i--) {
+        this.catListPointer = document.getElementById('catlist');
+
+        view.renderCatList();
+
+      },
+
+      renderCatList: function() {
+        var cats = octopus.getAllCats();
+
+        for (var i = cats.length - 1; i >= 0; i--) {
           var catListElement = document.createElement('li');
-          catListElement.innerHTML = '<h3>' + data[i].name + '</h3>';
 
-          catListElement.addEventListener('click', view.render(data[i]));
+          catListElement.innerHTML = '<h3>' + cats[i].name + '</h3>';
+          catListElement.addEventListener('click', view.render(cats[i]));
 
-          catListPointer.appendChild(catListElement);
+          this.catListPointer.appendChild(catListElement);
         }
-
       },
 
       render: function(cat) {
@@ -54,6 +61,10 @@
     var octopus = {
       init: function() {
         view.init();
+      },
+
+      getAllCats: function() {
+        return data;
       },
 
       incrementCount: function(cat) {
@@ -102,11 +113,10 @@
 
     <div class="cats">
       <div class="cat">
-      <ul id="catlist">
-      </ul>
+        <ul id="catlist"></ul>
       </div>
       <div id="cat" class="cat">
-        <h3>Please select a cat</h2>
+        <h3>Please select a cat</h3>
       </div>
     </div>
 
