@@ -6,42 +6,62 @@
   window.onload = function() {
 
     // cats data structure
-    var cats = [
-      {"name": "Catty", "image": "cat1.jpg", "counter": 0},
+    var data = [
+      {"name": "Cratty", "image": "cat1.jpg", "counter": 0},
       {"name": "Pitty", "image": "cat2.jpg", "counter": 0},
       {"name": "Gritty", "image": "cat3.jpg", "counter": 0},
       {"name": "Shmitty", "image": "cat4.jpg", "counter": 0},
-      {"name": "Brunty", "image": "cat5.jpg", "counter": 0}
+      {"name": "Brunty", "image": "cat5.jpg", "counter": 0},
+      {"name": "Tritty", "image": "cat6.jpg", "counter": 0}
     ];
 
-    // generate list of cats
-    var catListPointer = document.getElementById('catlist');
+    var view = {
+      init: function() {
+        var catListPointer = document.getElementById('catlist');
 
-    for (var i = cats.length - 1; i >= 0; i--) {
-      var catListElement = document.createElement('li');
-      catListElement.innerHTML = '<h3>' + cats[i].name + '</h3>';
+        for (var i = data.length - 1; i >= 0; i--) {
+          var catListElement = document.createElement('li');
+          catListElement.innerHTML = '<h3>' + data[i].name + '</h3>';
 
-      catListElement.addEventListener('click', (function(catCopy) {
+          catListElement.addEventListener('click', view.render(data[i]));
+
+          catListPointer.appendChild(catListElement);
+        }
+
+      },
+
+      render: function(cat) {
           return function() {
-            var nameHtml = '<h2>' + catCopy.name +'</h2>';
-            var clicksHtml = '<h3> Times clicked: <span id="counter">' + catCopy.counter + '</span></h3>';
-            var imageHtml = '<img id="image" src="' + catCopy.image + '" alt="Cat picture">';
+            var nameHtml = '<h2>' + cat.name +'</h2>';
+            var clicksHtml = '<h3> Times clicked: <span id="counter">' + cat.counter + '</span></h3>';
+            var imageHtml = '<img id="image" src="' + cat.image + '" alt="Cat picture">';
 
             document.getElementById('cat').innerHTML = nameHtml + clicksHtml + imageHtml;
 
             var imageLocator = document.getElementById('image');
             var clicksValue = document.getElementById('counter');
             var handler = function() {
-              clicksValue.innerHTML++ ;
-              catCopy.counter++;
+              octopus.incrementCount(cat);
+              clicksValue.innerHTML = cat.counter;
             };
 
             imageLocator.addEventListener('click', handler, false);
           };
-      })(cats[i]));
+      }
 
-      catListPointer.appendChild(catListElement);
-    }
+    };
+
+    var octopus = {
+      init: function() {
+        view.init();
+      },
+
+      incrementCount: function(cat) {
+        cat.counter++;
+      }
+    };
+
+    octopus.init();
 
   };
   </script>
