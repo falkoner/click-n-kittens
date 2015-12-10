@@ -6,21 +6,26 @@
   window.onload = function() {
 
     // cats data structure
-    var data = [
-      {"name": "Cratty", "image": "cat1.jpg", "counter": 0},
-      {"name": "Pitty", "image": "cat2.jpg", "counter": 0},
-      {"name": "Gritty", "image": "cat3.jpg", "counter": 0},
-      {"name": "Shmitty", "image": "cat4.jpg", "counter": 0},
-      {"name": "Brunty", "image": "cat5.jpg", "counter": 0},
-      {"name": "Tritty", "image": "cat6.jpg", "counter": 0}
-    ];
+    var model = {
+      current: 0,
+      data: [
+        {"name": "Cratty", "image": "cat1.jpg", "counter": 0},
+        {"name": "Pitty", "image": "cat2.jpg", "counter": 0},
+        {"name": "Gritty", "image": "cat3.jpg", "counter": 0},
+        {"name": "Shmitty", "image": "cat4.jpg", "counter": 0},
+        {"name": "Brunty", "image": "cat5.jpg", "counter": 0},
+        {"name": "Tritty", "image": "cat6.jpg", "counter": 0}
+      ]
+    };
 
     var view = {
       init: function() {
 
         this.catListPointer = document.getElementById('catlist');
+        this.adminAreaPointer = document.getElementById('cat-edit');
 
-        view.renderCatList();
+        this.renderCatList();
+        this.initializeAdminMode();
 
       },
 
@@ -31,14 +36,17 @@
           var catListElement = document.createElement('li');
 
           catListElement.innerHTML = '<h3>' + cats[i].name + '</h3>';
-          catListElement.addEventListener('click', view.render(cats[i]));
+          catListElement.addEventListener('click', view.renderCat(i));
 
           this.catListPointer.appendChild(catListElement);
         }
       },
 
-      render: function(cat) {
+      renderCat: function(cat_id) {
           return function() {
+            octopus.setCurrentCat(cat_id);
+            var cat = octopus.getCurrentCat();
+
             var nameHtml = '<h2>' + cat.name +'</h2>';
             var clicksHtml = '<h3> Times clicked: <span id="counter">' + cat.counter + '</span></h3>';
             var imageHtml = '<img id="image" src="' + cat.image + '" alt="Cat picture">';
@@ -54,7 +62,47 @@
 
             imageLocator.addEventListener('click', handler, false);
           };
+      },
+
+      renderAdminView: function() {
+        var cat = octopus.getCurrentCat();
+
+        var nameInput =   '<span>Cat Name: </span><input id="nameInput" type="text" value="'+ cat.name +'"><br/>';
+        var clicksInput = '<span>Clicks Counter: </span><input id="clicksInput" type="text" value="'+ cat.counter +'"><br/>';
+        var imageInput =  '<span>Image URL: </span><input id="imageInput" type="text" value="'+ cat.image +'"><br/>';
+        var cancelButton = '<button id="cancelButton">Cancel</button>';
+        var saveButton = '<button id="saveButton">Save</button>';
+
+        view.adminAreaPointer.innerHTML = nameInput + clicksInput + imageInput + cancelButton +  saveButton;
+
+        var cancelPointer = document.getElementById('cancelButton');
+        var savePointer = document.getElementById('saveButton');
+
+        cancelPointer.addEventListener('click', function() {
+          view.hideAdminView();
+        });
+
+        savePointer.addEventListener('click', function() {
+          octopus.updateCatData(document.getElementById('nameInput').value,
+            document.getElementById('clicksInput').value,
+            document.getElementById('imageInput').value
+          )
+          octopus.refreshCurrentCat();
+          view.hideAdminView();
+        });
+
+      },
+
+      hideAdminView: function() {
+        view.adminAreaPointer.innerHTML = '';
+      },
+
+      initializeAdminMode: function() {
+        var adminButton = document.getElementById('admin');
+
+        adminButton.addEventListener('click', this.renderAdminView);
       }
+
 
     };
 
@@ -64,11 +112,31 @@
       },
 
       getAllCats: function() {
-        return data;
+        return model.data;
+      },
+
+      getCurrentCat: function(){
+        return model.data[model.current];
+      },
+
+      refreshCurrentCat: function () {
+        view.renderCat(model.current)();
+      },
+
+      setCurrentCat: function(cat_id){
+        model.current = cat_id;
       },
 
       incrementCount: function(cat) {
         cat.counter++;
+      },
+
+      updateCatData: function(name, clicks, image) {
+        var cat = octopus.getCurrentCat();
+
+        cat.name = name;
+        cat.counter = clicks;
+        cat.image = image;
       }
     };
 
@@ -104,6 +172,15 @@
     border-style: solid;
     margin: 2px;
   }
+
+  #cat-edit {
+    text-align: left;
+  }
+
+  #cat-edit span{
+    margin-right: 50px;
+  }
+
   </style>
 </head>
 <body>
@@ -118,6 +195,11 @@
       <div id="cat" class="cat">
         <h3>Please select a cat</h3>
       </div>
+    </div>
+
+    <div class="admin">
+      <button id="admin">Admin Mode</button>
+      <div id="cat-edit"></div>
     </div>
 
   </div>
