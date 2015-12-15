@@ -1,0 +1,35 @@
+  .container {
+    text-align: center;
+    width: 800px;
+    margin: 0 auto;
+  }
+  img {
+    max-width: 100%;
+  }
+  .cats {
+    display: flex;
+  }
+  .cat {
+    border: 3px;
+    border-style: outset;
+    margin: 5px;
+  }
+  #catlist {
+    list-style: none;
+    text-align: center;
+    padding: 10px;
+  }
+
+  #catlist li {
+    border: gray;
+    border-style: solid;
+    margin: 2px;
+  }
+
+  #cat-edit {
+    text-align: left;
+  }
+
+  #cat-edit span{
+    margin-right: 50px;
+  }

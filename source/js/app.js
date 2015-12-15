@@ -1,20 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Click-n-kittens</title>
-  <script>
   window.onload = function() {
 
     // cats data structure
     var model = {
       current: 0,
       data: [
-        {"name": "Cratty", "image": "cat1.jpg", "counter": 0},
-        {"name": "Pitty", "image": "cat2.jpg", "counter": 0},
-        {"name": "Gritty", "image": "cat3.jpg", "counter": 0},
-        {"name": "Shmitty", "image": "cat4.jpg", "counter": 0},
-        {"name": "Brunty", "image": "cat5.jpg", "counter": 0},
-        {"name": "Tritty", "image": "cat6.jpg", "counter": 0}
+        {"name": "Cratty", "image": "img/cat1.jpg", "counter": 0},
+        {"name": "Pitty", "image": "img/cat2.jpg", "counter": 0},
+        {"name": "Gritty", "image": "img/cat3.jpg", "counter": 0},
+        {"name": "Shmitty", "image": "img/cat4.jpg", "counter": 0},
+        {"name": "Brunty", "image": "img/cat5.jpg", "counter": 0},
+        {"name": "Tritty", "image": "img/cat6.jpg", "counter": 0}
       ]
     };
 
@@ -143,66 +138,3 @@
     octopus.init();
 
   };
-  </script>
-  <style>
-  .container {
-    text-align: center;
-    width: 800px;
-    margin: 0 auto;
-  }
-  img {
-    max-width: 100%;
-  }
-  .cats {
-    display: flex;
-  }
-  .cat {
-    border: 3px;
-    border-style: outset;
-    margin: 5px;
-  }
-  #catlist {
-    list-style: none;
-    text-align: center;
-    padding: 10px;
-  }
-
-  #catlist li {
-    border: gray;
-    border-style: solid;
-    margin: 2px;
-  }
-
-  #cat-edit {
-    text-align: left;
-  }
-
-  #cat-edit span{
-    margin-right: 50px;
-  }
-
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Amazing Cat Clicker</h1>
-    <p>Please like my cat! Try clicking on this bud</p>
-
-    <div class="cats">
-      <div class="cat">
-        <ul id="catlist"></ul>
-      </div>
-      <div id="cat" class="cat">
-        <h3>Please select a cat</h3>
-      </div>
-    </div>
-
-    <div class="admin">
-      <button id="admin">Admin Mode</button>
-      <div id="cat-edit"></div>
-    </div>
-
-  </div>
-
-</body>
-</html>
