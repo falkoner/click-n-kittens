@@ -28,8 +28,17 @@
     </div>
 
     <div class="admin">
-      <button id="admin">Admin Mode</button>
-      <div id="cat-edit"></div>
+      <button id="admin" data-bind="click: toggleAdminMode">Admin Mode</button>
+
+      <div id="cat-edit" data-bind="visible: isAdminMode">
+
+        <span>Cat Name: </span><input id="nameInput" type="text" data-bind="value: editedCatName"><br/>
+        <span>Clicks Counter: </span><input id="clicksInput" type="text" data-bind="value: editedCatCounter"><br/>
+        <span>Image URL: </span><input id="imageInput" type="text" data-bind="value: editedCatImage"><br/>
+        <button id="cancelButton" data-bind="click: cancelAdminMode">Cancel</button>
+        <button id="saveButton" data-bind="click: saveAdminMode">Save</button>
+      </div>
+
     </div>
 
   </div>
