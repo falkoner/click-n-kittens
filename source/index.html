@@ -20,23 +20,23 @@
           <li data-bind="click: $parent.changeCat"><h3 data-bind="text: name"></h3></li>
         </ul>
       </div>
-      <div id="cat" class="cat" data-bind="with: currentCat">
+      <div class="cat" data-bind="with: currentCat">
         <h2 data-bind='text: name'></h2>
         <h3>Times clicked: <span data-bind='text: counter'></span></h3>
-        <img id="image" alt="Cat picture" data-bind="attr: {src: image}, click: $parent.incrementCount">
+        <img alt="Cat picture" data-bind="attr: {src: image}, click: $parent.incrementCount">
       </div>
     </div>
 
     <div class="admin">
-      <button id="admin" data-bind="click: toggleAdminMode">Admin Mode</button>
+      <button data-bind="click: toggleAdminMode">Admin Mode</button>
 
-      <div id="cat-edit" data-bind="visible: isAdminMode">
+      <div id="cat-edit" data-bind="visible: isAdminMode, with: editedCat">
 
-        <span>Cat Name: </span><input id="nameInput" type="text" data-bind="value: editedCatName"><br/>
-        <span>Clicks Counter: </span><input id="clicksInput" type="text" data-bind="value: editedCatCounter"><br/>
-        <span>Image URL: </span><input id="imageInput" type="text" data-bind="value: editedCatImage"><br/>
-        <button id="cancelButton" data-bind="click: cancelAdminMode">Cancel</button>
-        <button id="saveButton" data-bind="click: saveAdminMode">Save</button>
+        <span>Cat Name: </span><input type="text" data-bind="value: name"><br/>
+        <span>Clicks Counter: </span><input type="text" data-bind="value: counter"><br/>
+        <span>Image URL: </span><input type="text" data-bind="value: image"><br/>
+        <button data-bind="click: $parent.cancelAdminMode">Cancel</button>
+        <button data-bind="click: $parent.saveAdminMode">Save</button>
       </div>
 
     </div>

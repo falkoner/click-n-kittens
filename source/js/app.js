@@ -11,8 +11,11 @@ var Cat = function(data) {
   this.name = ko.observable(data.name);
   this.counter = ko.observable(data.counter);
   this.image = ko.observable(data.image);
-}
 
+  this.getCopy = function() {
+    return new Cat({"name": this.name(), "image": this.image(), "counter": this.counter()});
+  }
+}
 
 var ViewModel = function() {
   var self = this;
@@ -36,17 +39,13 @@ var ViewModel = function() {
 
   self.isAdminMode = ko.observable(false);
 
-  self.editedCatName = ko.observable();
-  self.editedCatImage = ko.observable();
-  self.editedCatCounter = ko.observable();
+  self.editedCat = ko.observable();
 
   self.toggleAdminMode = function() {
     if (self.isAdminMode()) {
       self.cancelAdminMode();
     } else {
-      self.editedCatName(self.currentCat().name());
-      self.editedCatImage(self.currentCat().image());
-      self.editedCatCounter(self.currentCat().counter());
+      self.editedCat(self.currentCat().getCopy());
 
       self.isAdminMode(true);
     }
@@ -55,15 +54,12 @@ var ViewModel = function() {
   self.cancelAdminMode = function () {
     self.isAdminMode(false);
 
-    self.editedCatName("");
-    self.editedCatImage("");
-    self.editedCatCounter("");
+    self.editedCat("");
   }
 
   self.saveAdminMode = function () {
-    self.currentCat().name(self.editedCatName());
-    self.currentCat().image(self.editedCatImage());
-    self.currentCat().counter(self.editedCatCounter());
+
+    self.currentCat(self.editedCat());
 
     self.cancelAdminMode();
   }
